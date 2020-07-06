@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model shuffle2.Models.UserModel
+
+<!DOCTYPE html>
 <html>
 <head id="Head1" runat="server">
 
@@ -15,9 +17,20 @@
             <asp:Button ID="start" runat="server" ToolTip="Click to show user" Text="ShuffleId-Results"
                         OnClick="start" />
 
-            <strong>gives a gift to</strong>
+            <table border="0" cellpadding="5" cellspacing="1">
+                <tr>
+                    <td>@Html.TextBoxFor(z => z.Name)</td>
+                </tr>
+                <tr>
+                    <td><strong>gives a gift to</strong></td>
+                </tr>
+                <tr>
+                    <td>@Html.TextBoxFor(z => z.Name)</td>
+                </tr>
+            </table>
 
-           
+
+
         </div>
 
     </form>
