@@ -36,14 +36,14 @@ namespace shuffle2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.AddToUsers(newUser);
-                db.SaveChanges();
+                _db.Add(newUser);
+                _db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(newUser);
+                return View("create");
             }
         }
 
@@ -102,10 +102,16 @@ namespace shuffle2.Controllers
             }
         }
 
+        public void shuffleId()
+        {
+            var rnd = new Random();
+            
+        }
 
         protected void start(object sender, EventArgs e)
 
         {
+            shuffleId();
         }
     }
 

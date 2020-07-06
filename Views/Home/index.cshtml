@@ -24,21 +24,21 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var user in Model)
         {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelUser => user.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SurName)
+            @Html.DisplayFor(modelUser => user.SurName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @Html.DisplayFor(modelUser => user.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = user.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = user.Id })
         </td>
     </tr>
         }
