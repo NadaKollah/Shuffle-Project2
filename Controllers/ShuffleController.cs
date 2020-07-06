@@ -32,11 +32,20 @@ namespace shuffle2.Controllers
 
 
         [HttpPost]
-        public ActionResult Create(User newUser)
+        public ActionResult Create(User newuser)
         {
             if (ModelState.IsValid)
             {
-                _db.Add(newUser);
+
+                var input = new User
+                {
+                    Id = newuser.Id,
+                    Name = newuser.Name,
+                    Surname = newuser.Surname,
+                    Email = newuser.Email
+                 
+                };
+
                 _db.SaveChanges();
 
                 return RedirectToAction("Index");
