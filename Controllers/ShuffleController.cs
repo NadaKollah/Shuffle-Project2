@@ -20,13 +20,14 @@ namespace shuffle2.Controllers
            
         }
 
-   
-        public IActionResult Index()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Index(int id)
         {
+            var user = await _db.user.FindAsync(id);
             return View();
         }
 
-
+        
         [HttpPost]
         public ActionResult Create(User newuser)
         {
