@@ -32,7 +32,6 @@ namespace shuffle2
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
           
             services.AddScoped<ShuffleDbContext>();
-            services.AddRazorPages();
             services.AddControllers();
             services.AddControllersWithViews();
 
