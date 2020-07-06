@@ -1,8 +1,7 @@
 ﻿@model shuffle2.Models.UserModel
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit";
 }
 
 <h2>Edit</h2>
@@ -52,3 +51,4 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+

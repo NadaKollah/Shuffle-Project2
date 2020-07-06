@@ -12,22 +12,20 @@ namespace shuffle2.Controllers
     public class ShuffleController: Controller
     {
         private readonly ShuffleDbContext _db;
-
-        public ShuffleController(ShuffleDbContext db)
-        {
-            _db = db;
-        }
-
         private UserManager<User> userManager;
 
-        public ShuffleController(UserManager<User> usrMgr)
+        public ShuffleController(ShuffleDbContext db, UserManager<User> usrMgr)
         {
+            _db = db;
             userManager = usrMgr;
         }
 
+   
         public IActionResult Index()
         {
-            return View(userManager.Users);
+            var input = _db.user.Find();
+
+            return View(input);
         }
 
 

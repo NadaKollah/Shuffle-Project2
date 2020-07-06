@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using shuffle2.Data;
+using shuffle2.Entity;
 
 namespace shuffle2
 {
@@ -27,12 +29,21 @@ namespace shuffle2
         {
             var connectionString = Configuration["Data:ConnectionStrings:DefaultConnection"];
             services.AddDbContext<ShuffleDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("ShuffleDatabase")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>(
+            options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<ShuffleDbContext>();
+
+            services.AddScoped<UserManager<User>, UserManager<User>>();
+            services.AddScoped<ShuffleDbContext>();
+            services.AddRazorPages();
             services.AddControllers();
             services.AddControllersWithViews();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.System.ArgumentNullException: 'Value cannot be null. (Parameter 'connectionString')'
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -56,7 +67,7 @@ namespace shuffle2
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Shuffle}/{action=Index}/{id?}");
             });
         }
     }

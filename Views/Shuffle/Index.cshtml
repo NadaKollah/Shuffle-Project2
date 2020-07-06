@@ -1,0 +1,46 @@
+﻿@model IEnumerable<UserModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2><strong>Index</strong></h2>
+
+<p>
+    @Html.ActionLink("Create New User", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelUser => user.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelUser => user.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = user.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = user.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+

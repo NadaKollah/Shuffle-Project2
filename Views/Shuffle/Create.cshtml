@@ -1,12 +1,9 @@
 ﻿@model UserModel
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Create User Page</title>
-</head>
-<body>
+@{
+    ViewData["Title"] = "Create";
+}
+    <h2>Create</h2>
 
     <h1 class="bg-info text-white">Create User</h1>
     <a asp-action="Index" class="btn btn-secondary">Back</a>
@@ -27,6 +24,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
- 
-    </body>
-</html>
+
+

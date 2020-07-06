@@ -13,15 +13,18 @@ namespace shuffle2.Entity
         [Key]
         [Column("Id")]
         public int Id { get; set; }
-      
+
+        [Required]
         [Column("Name")]
         public string Name { get; set; }
         
+        [Required]
         [Column("Surname")]
         public string Surname { get; set; }
-        
+
+        [Required]
         [Column("Email")]
-        //[RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Invalid Email")]
         public string Email { get; set; }
     }
 }
