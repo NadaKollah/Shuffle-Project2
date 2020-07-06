@@ -30,11 +30,7 @@ namespace shuffle2
             var connectionString = Configuration["Data:ConnectionStrings:DefaultConnection"];
             services.AddDbContext<ShuffleDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(
-            options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ShuffleDbContext>();
-
-            services.AddScoped<UserManager<User>, UserManager<User>>();
+          
             services.AddScoped<ShuffleDbContext>();
             services.AddRazorPages();
             services.AddControllers();

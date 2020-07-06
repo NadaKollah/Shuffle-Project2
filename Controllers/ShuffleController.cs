@@ -6,26 +6,24 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using shuffle2.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace shuffle2.Controllers
 {
     public class ShuffleController: Controller
     {
         private readonly ShuffleDbContext _db;
-        private UserManager<User> userManager;
 
-        public ShuffleController(ShuffleDbContext db, UserManager<User> usrMgr)
+        public ShuffleController(ShuffleDbContext db)
         {
             _db = db;
-            userManager = usrMgr;
+           
         }
 
    
         public IActionResult Index()
         {
-            var input = _db.user.Find();
-
-            return View(input);
+            return View();
         }
 
 
@@ -54,60 +52,107 @@ namespace shuffle2.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
-        {
-            var user = await userManager.FindByIdAsync(id);
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _db.user.FindAsync(id);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"This user with Id = {id} doesn't exist";
-                return View("Shared.Error");
+                return NotFound();
             }
-            else
-            {
-                var result = await userManager.UpdateAsync(user);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                return View("edit");
-            }
-        }     
+            return View(user);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] User user)
         {
-            var user = await userManager.FindByIdAsync(id);
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _db.Update(user);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (user!= null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            return View(user);
+            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _db.user
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"This user with Id = {id} doesn't exist";
-                return View("Shared.Error");
+                return NotFound();
             }
-            else
-            {
-                var result = await userManager.DeleteAsync(user);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                return View("index");
-            }
+            return View(user);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id, [Bind("Id,Name,Surname,Email")] User user)
+        {
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _db.Remove(user);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (user != null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            return View(user);
+
+        }
+       
 
         public void shuffleId()
         {
