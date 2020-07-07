@@ -22,8 +22,7 @@ namespace shuffle2.Controllers
 
         public ShuffleController(ShuffleDbContext db)
         {
-            _db = db;
-           
+            _db = db;    
         }
 
         [Route("Shuffle/Index")]
