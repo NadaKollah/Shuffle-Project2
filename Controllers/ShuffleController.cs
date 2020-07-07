@@ -25,6 +25,8 @@ namespace shuffle2.Controllers
             _db = db;    
         }
 
+        [Route("")]
+        [Route("Shuffle")]
         [Route("Shuffle/Index")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
@@ -162,12 +164,12 @@ namespace shuffle2.Controllers
        
 
         public void shuffleId()
-        {
-        
+        {        
             var user2 = @"SELECT Name
             FROM User
             ORDER BY NEWID()";
 
+            return view(user2);
         }
 
         protected void start(object sender, EventArgs e)
