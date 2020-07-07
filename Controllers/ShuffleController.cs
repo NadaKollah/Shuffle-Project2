@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 
 namespace shuffle2.Controllers
 {
-    [Route("[controller]/[action]")]
     public class ShuffleController: Controller
     {
        
@@ -25,16 +24,12 @@ namespace shuffle2.Controllers
             _db = db;    
         }
 
-        [Route("")]
-        [Route("Shuffle")]
-        [Route("Shuffle/Index")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index()
         {
             return View(await _db.users.ToListAsync());
         }
 
-        [Route("Shuffle/Create")]
+        
         [HttpPost]
         public ActionResult Create(User newuser)
         {
@@ -60,7 +55,7 @@ namespace shuffle2.Controllers
             }
         }
 
-        [Route("Shuffle/Edit")]
+        
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -169,7 +164,6 @@ namespace shuffle2.Controllers
             FROM User
             ORDER BY NEWID()";
 
-            return view(user2);
         }
 
         protected void start(object sender, EventArgs e)
