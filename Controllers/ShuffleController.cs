@@ -33,13 +33,6 @@ namespace shuffle2.Controllers
             return View(await _db.users.ToListAsync());
         }
 
-        [HttpGet]
-        public Task<List<User>> GetAllUsers()
-        {     
-            return _db.users.OrderByDescending(s => s.Id).ToListAsync();  
-        }
-
-
         [Route("Shuffle/Create")]
         [HttpPost]
         public ActionResult Create(User newuser)
