@@ -14,63 +14,67 @@ using Microsoft.Extensions.Logging;
 
 namespace shuffle2.Controllers
 {
-    public class ShuffleController: Controller
+    public class ShuffleController : Controller
     {
-       
+
         private readonly ShuffleDbContext _db;
 
         public ShuffleController(ShuffleDbContext db)
         {
-            _db = db;    
+            _db = db;
         }
 
         public ActionResult Index()
-        {   
+        {
             var userList = _db.users.ToList();
             var userListViewModel = new List<UserModel>();
 
-            foreach(var item in userList)
+            foreach (var item in userList)
             {
                 var user = new UserModel()
                 {
-                    Id = item.Id,
+                    UserId = item.Id,
                     Name = item.Name,
                     Surname = item.Surname,
                     Email = item.Email
                 };
                 userListViewModel.Add(user);
             }
-         
+
             return View(userListViewModel);
         }
 
-        
-        [HttpPost]
-        public ActionResult Create(User newuser)
+        public ActionResult Create()
         {
+            return View("create");
+        }
+
+
+        [HttpPost("/Shuffle/Create")]
+        public ActionResult Create(UserModel newUser)
+        {
+
             if (ModelState.IsValid)
             {
-
-                var input = new User
+                var userEntity = new User()
                 {
-                    Id = newuser.Id,
-                    Name = newuser.Name,
-                    Surname = newuser.Surname,
-                    Email = newuser.Email
-                 
+                    Id = newUser.UserId,
+                    Name = newUser.Name,
+                    Surname = newUser.Surname,
+                    Email = newUser.Email
                 };
-
+                _db.Add(userEntity);
                 _db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
             else
             {
-                return View("create");
+                return View(newUser);
             }
         }
 
-        
+       
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -82,7 +86,7 @@ namespace shuffle2.Controllers
             var user = await _db.users.FindAsync(id);
             var userModel = new UserModel()
             {
-                Id = user.Id,
+                UserId = user.Id,
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email
@@ -94,19 +98,19 @@ namespace shuffle2.Controllers
             return View(userModel);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] UserModel user)
         {
-            if (id != user.Id)
+            if (id != user.UserId)
             {
                 return NotFound();
             }
             var userEntity = new User()
             {
 
-                Id = user.Id,
+                Id = user.UserId,
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email
@@ -116,57 +120,6 @@ namespace shuffle2.Controllers
                 try
                 {
                     _db.Update(userEntity);
-                    await _db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (user!= null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            return View(user);
-            
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _db.users
-                .FirstOrDefaultAsync(x => x.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, [Bind("Id,Name,Surname,Email")] User user)
-        {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _db.Remove(user);
                     await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -185,7 +138,24 @@ namespace shuffle2.Controllers
             return View(user);
 
         }
-       
+
+
+        [HttpGet("/Shuffle/Delete/{id?}")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            User user = _db.users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            _db.users.Remove(user);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         public void shuffleId()
         {        
