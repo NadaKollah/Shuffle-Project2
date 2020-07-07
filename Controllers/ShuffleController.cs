@@ -157,8 +157,23 @@ namespace shuffle2.Controllers
 
         public void shuffleId()
         {
-            var rnd = new Random();
-            
+
+            /*Random rnd = new Random();
+            string[] MyRandomArray = MyArray.OrderBy(x => rnd.Next()).ToArray();
+            var user = @"SELECT Name
+                                FROM User
+                                ORDER BY RAND()
+                                LIMIT 1";
+
+            var user2= @" SELECT TOP 1 Name FROM User
+            ORDER BY NEWID()";
+
+            var user2 = @"SELECT Name
+            FROM User
+            ORDER BY NEWID()";*/
+
+            var countList1 = list.Where(x => x.NAVI_USER == Name && x.MONTH == monthList[1] && x.PPZN_ID == 0).Select(x => x.COUNT).FirstOrDefault();
+
         }
 
         protected void start(object sender, EventArgs e)
