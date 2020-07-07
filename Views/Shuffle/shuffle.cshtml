@@ -4,31 +4,33 @@
     ViewData["Title"] = "shuffle";
 }
 
-<h1>Shuffle Page</h1>
+<h1 style="text-align:center;" >Shuffle Page</h1>
 
 
-    <form id="form1" runat="server">
+<form id="form1" runat="server">
 
-        <div>
+    <button type="submit" class="btn btn-primary">Start</button>
+    <br>
+    <div>
 
-            <asp:Button ID="start" runat="server" ToolTip="Click to show user" Text="ShuffleId-Results"
-                        OnClick="start" />
+        <asp:Button ID="start" runat="server" ToolTip="Click to show user" Text="ShuffleId-Results"
+                    OnClick="start" />
 
-            <table border="0" cellpadding="5" cellspacing="1">
-                <tr>
-                    <td>@Html.TextBoxFor(z => z.Name)</td>
-                </tr>
-                <tr>
-                    <td><strong>gives a gift to</strong></td>
-                </tr>
-                <tr>
-                    <td>@Html.TextBoxFor(z => z.Name)</td>
-                </tr>
-            </table>
+        <table border="0" cellpadding="5" cellspacing="1">
+            <tr>
+                <td>@Html.TextBoxFor(z => z.Name)</td>
+            </tr>
+            <tr>
+                <td><strong>gives a gift to</strong></td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(z => z.Name)</td>
+            </tr>
+        </table>
 
 
 
-        </div>
+    </div>
 
-    </form>
+</form>
 

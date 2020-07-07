@@ -163,9 +163,9 @@ namespace shuffle2.Controllers
                             ORDER BY NEWID()";
 
             return View(user2);*/
-
-            return View("Shuffle");
-
+         
+                return View("Shuffle");
+            
         }
 
         protected void start(object sender, EventArgs e)
