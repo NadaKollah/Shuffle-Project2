@@ -24,9 +24,24 @@ namespace shuffle2.Controllers
             _db = db;    
         }
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _db.users.ToListAsync());
+        public ActionResult Index()
+        {   
+            var userList = _db.users.ToList();
+            var userListViewModel = new List<UserModel>();
+
+            foreach(var item in userList)
+            {
+                var user = new UserModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Surname = item.Surname,
+                    Email = item.Email
+                };
+                userListViewModel.Add(user);
+            }
+         
+            return View(userListViewModel);
         }
 
         
@@ -65,28 +80,42 @@ namespace shuffle2.Controllers
             }
 
             var user = await _db.users.FindAsync(id);
+            var userModel = new UserModel()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email
+            };
             if (user == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(userModel);
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] UserModel user)
         {
             if (id != user.Id)
             {
                 return NotFound();
             }
+            var userEntity = new User()
+            {
 
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email
+            };
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _db.Update(user);
+                    _db.Update(userEntity);
                     await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

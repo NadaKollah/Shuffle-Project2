@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserModel>
+﻿@model IEnumerable<shuffle2.Models.UserModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,20 +10,21 @@
     @Html.ActionLink("Create New User", "Create")
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Surname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
+    
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
 
-    @foreach (UserModel user in Model)
+    @foreach (var user in Model)
     {
         <tr>
             <td>
