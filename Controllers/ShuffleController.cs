@@ -30,8 +30,7 @@ namespace shuffle2.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var user = await _db.users.FindAsync(id);
-            return View();
+            return View(await _db.users.ToListAsync());
         }
 
         [HttpGet]
