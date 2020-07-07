@@ -7,6 +7,8 @@ using System.Data;
 using System.Data.SqlClient;
 using shuffle2.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using shuffle2.Models;
 
 namespace shuffle2.Controllers
 {
@@ -27,7 +29,21 @@ namespace shuffle2.Controllers
             return View();
         }
 
-        
+        public async Task<UserModel> GetUser(int id)
+        {
+            var user = await _db.GetUser(id);
+
+            var output = new UserModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email
+            };
+
+            return output;
+        }
+
         [HttpPost]
         public ActionResult Create(User newuser)
         {
@@ -157,6 +173,13 @@ namespace shuffle2.Controllers
 
         public void shuffleId()
         {
+            IEnumerable<User> Query = (from user in User.()
+                                        select new User()
+                                        {
+                                            Name = user.Name,
+                                            Surname = user.Surname,
+                                            Email = user.Email
+                                        }).ToList(); 
 
             /*Random rnd = new Random();
             string[] MyRandomArray = MyArray.OrderBy(x => rnd.Next()).ToArray();
