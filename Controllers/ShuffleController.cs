@@ -10,11 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using shuffle2.Models;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace shuffle2.Controllers
 {
+    [Route("[controller]/[action]")]
     public class ShuffleController: Controller
     {
+       
         private readonly ShuffleDbContext _db;
 
         public ShuffleController(ShuffleDbContext db)
@@ -23,6 +26,7 @@ namespace shuffle2.Controllers
            
         }
 
+        [Route("Shuffle/Index")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
@@ -30,11 +34,14 @@ namespace shuffle2.Controllers
             return View();
         }
 
+        [HttpGet]
         public Task<List<User>> GetAllUsers()
         {     
             return _db.users.OrderByDescending(s => s.Id).ToListAsync();  
         }
 
+
+        [Route("Shuffle/Create")]
         [HttpPost]
         public ActionResult Create(User newuser)
         {
@@ -60,7 +67,7 @@ namespace shuffle2.Controllers
             }
         }
 
-
+        
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -77,6 +84,7 @@ namespace shuffle2.Controllers
             return View(user);
         }
 
+        [Route("Shuffle/Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] User user)
@@ -164,22 +172,10 @@ namespace shuffle2.Controllers
 
         public void shuffleId()
         {
-            IEnumerable<User> Query = (from user in _db.users.Select(user => user.Name));
-            
-            /*Random rnd = new Random();
-            string[] MyRandomArray = MyArray.OrderBy(x => rnd.Next()).ToArray();
-            var user = @"SELECT Name
-                                FROM User
-                                ORDER BY RAND()
-                                LIMIT 1";
-
-            var user2= @" SELECT TOP 1 Name FROM User
-            ORDER BY NEWID()";
-
+        
             var user2 = @"SELECT Name
             FROM User
-            ORDER BY NEWID()";*/
-
+            ORDER BY NEWID()";
 
         }
 
