@@ -67,7 +67,7 @@ namespace shuffle2.Controllers
             }
         }
 
-        
+        [Route("Shuffle/Edit")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -84,7 +84,7 @@ namespace shuffle2.Controllers
             return View(user);
         }
 
-        [Route("Shuffle/Edit")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] User user)
