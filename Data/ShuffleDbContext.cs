@@ -8,7 +8,7 @@ namespace shuffle2.Data
     {
         public ShuffleDbContext(DbContextOptions<ShuffleDbContext> options) : base(options) { }
 
-        public DbSet<User> user { get; set; }
+        public DbSet<User> users { get; set; }
        
     }
 

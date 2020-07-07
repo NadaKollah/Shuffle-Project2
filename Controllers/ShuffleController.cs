@@ -9,6 +9,7 @@ using shuffle2.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using shuffle2.Models;
+using System.Linq;
 
 namespace shuffle2.Controllers
 {
@@ -25,23 +26,13 @@ namespace shuffle2.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var user = await _db.user.FindAsync(id);
+            var user = await _db.users.FindAsync(id);
             return View();
         }
 
-        public async Task<UserModel> GetUser(int id)
-        {
-            var user = await _db.GetUser(id);
-
-            var output = new UserModel
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Surname = user.Surname,
-                Email = user.Email
-            };
-
-            return output;
+        public Task<List<User>> GetAllUsers()
+        {     
+            return _db.users.OrderByDescending(s => s.Id).ToListAsync();  
         }
 
         [HttpPost]
@@ -78,7 +69,7 @@ namespace shuffle2.Controllers
                 return NotFound();
             }
 
-            var user = await _db.user.FindAsync(id);
+            var user = await _db.users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -127,7 +118,7 @@ namespace shuffle2.Controllers
                 return NotFound();
             }
 
-            var user = await _db.user
+            var user = await _db.users
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {
@@ -173,14 +164,8 @@ namespace shuffle2.Controllers
 
         public void shuffleId()
         {
-            IEnumerable<User> Query = (from user in User.()
-                                        select new User()
-                                        {
-                                            Name = user.Name,
-                                            Surname = user.Surname,
-                                            Email = user.Email
-                                        }).ToList(); 
-
+            IEnumerable<User> Query = (from user in _db.users.Select(user => user.Name));
+            
             /*Random rnd = new Random();
             string[] MyRandomArray = MyArray.OrderBy(x => rnd.Next()).ToArray();
             var user = @"SELECT Name
@@ -195,7 +180,6 @@ namespace shuffle2.Controllers
             FROM User
             ORDER BY NEWID()";*/
 
-            var countList1 = list.Where(x => x.NAVI_USER == Name && x.MONTH == monthList[1] && x.PPZN_ID == 0).Select(x => x.COUNT).FirstOrDefault();
 
         }
 
