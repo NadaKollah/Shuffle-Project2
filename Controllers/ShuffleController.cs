@@ -33,7 +33,7 @@ namespace shuffle2.Controllers
             {
                 var user = new UserModel()
                 {
-                    UserId = item.Id,
+                    Id = item.Id,
                     Name = item.Name,
                     Surname = item.Surname,
                     Email = item.Email
@@ -58,7 +58,6 @@ namespace shuffle2.Controllers
             {
                 var userEntity = new User()
                 {
-                    Id = newUser.UserId,
                     Name = newUser.Name,
                     Surname = newUser.Surname,
                     Email = newUser.Email
@@ -86,7 +85,7 @@ namespace shuffle2.Controllers
             var user = await _db.users.FindAsync(id);
             var userModel = new UserModel()
             {
-                UserId = user.Id,
+                Id = user.Id,
                 Name = user.Name,
                 Surname = user.Surname,
                 Email = user.Email
@@ -103,18 +102,16 @@ namespace shuffle2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Email")] UserModel user)
         {
-            if (id != user.UserId)
+            if (id != user.Id)
             {
                 return NotFound();
             }
-            var userEntity = new User()
-            {
+            var userEntity = _db.users.Find(id);
 
-                Id = user.UserId,
-                Name = user.Name,
-                Surname = user.Surname,
-                Email = user.Email
-            };
+            userEntity.Name = user.Name;
+            userEntity.Surname = user.Surname;
+            userEntity.Email = user.Email;
+
             if (ModelState.IsValid)
             {
                 try
@@ -157,7 +154,9 @@ namespace shuffle2.Controllers
             return RedirectToAction("Index");
         }
 
-        public void shuffleId()
+
+        [HttpGet("/Shuffle/Anything")]
+        public ActionResult shuffle()
         {        
             var user2 = @"SELECT Name
             FROM User

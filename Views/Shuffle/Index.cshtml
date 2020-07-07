@@ -37,8 +37,8 @@
                 @Html.DisplayFor(modelUser => user.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = user.UserId }) |
-                @Html.ActionLink("Delete","Delete", new { id = user.UserId })
+                @Html.ActionLink("Edit", "Edit", new { id = user.Id }) |
+                @Html.ActionLink("Delete","Delete", new { id = user.Id })
             </td>
         </tr>
     }

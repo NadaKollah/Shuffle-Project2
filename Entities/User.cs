@@ -12,6 +12,7 @@ namespace shuffle2.Entity
     {
         [Key]
         [Column("Id")]
+
         public int Id { get; set; }
 
         [Required]
