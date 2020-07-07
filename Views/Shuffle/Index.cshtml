@@ -10,19 +10,19 @@
     @Html.ActionLink("Create New User", "Create")
 </p>
 <table class="table">
-    
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th></th>
-        </tr>
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
 
     @foreach (var user in Model)
     {
@@ -38,9 +38,12 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = user.Id }) |
-                @Html.ActionLink("Delete","Delete", new { id = user.Id })
+                @Html.ActionLink("Delete", "Delete", new { id = user.Id })
             </td>
         </tr>
     }
-
 </table>
+
+<div>
+    @Html.ActionLink("Go to Shuffle Page", "Shuffle")
+</div>

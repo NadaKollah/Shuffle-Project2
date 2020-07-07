@@ -156,18 +156,22 @@ namespace shuffle2.Controllers
 
 
         [HttpGet("/Shuffle/Anything")]
-        public ActionResult shuffle()
-        {        
-            var user2 = @"SELECT Name
-            FROM User
-            ORDER BY NEWID()";
+        public ActionResult Shuffle()
+        {
+            /*var user2 = @"SELECT Name
+                            FROM User
+                            ORDER BY NEWID()";
+
+            return View(user2);*/
+
+            return View("Shuffle");
 
         }
 
         protected void start(object sender, EventArgs e)
 
         {
-            shuffleId();
+            Shuffle();
         }
     }
 
