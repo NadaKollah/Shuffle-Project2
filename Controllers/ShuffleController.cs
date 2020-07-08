@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using shuffle2.Models;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
+using System.Configuration;
+using System.Net;
 
 namespace shuffle2.Controllers
 {
@@ -73,7 +76,7 @@ namespace shuffle2.Controllers
             }
         }
 
-       
+
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -176,23 +179,74 @@ namespace shuffle2.Controllers
                 Random random = new Random();
                 int id1 = random.Next(userList.Count);
                 var user = userList[id1];
-                var skip = userList.SkipWhile(x=>x.Id==item.Id).Where(x=>x.Id==user.Id);
+                var skip = userList.SkipWhile(x => x.Id == item.Id).Where(x => x.Id == user.Id);
                 userList.Remove(user);
 
                 var names = new NamesModel()
                 {
-                   Name1=item.Name,
-                   Name2=user.Name
-                   
+                    Name1 = item.Name,
+                    Name2 = user.Name
+
                 };
-               
+
                 list.Add(names);
             }
-            
+
             shuffleModel.names = list;
             return View(shuffleModel);
-  
         }
+
+        protected void sendEmail_Click(object sender, EventArgs e)
+        {
+            {
+
+                MailMessage message = new MailMessage();
+                message.Subject = "Email Subject ";
+                message.Body = "Email Message";
+                message.From = new MailAddress("MyEmail@mail.com");
+
+                var fromAddress = "MyEmail@mail.com";
+                const string fromPassword = "password";
+
+                var smtp = new System.Net.Mail.SmtpClient();
+                {
+                    smtp.Host = "smtp.mail.com";
+                    smtp.EnableSsl = true;
+                    smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                    smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
+                    smtp.Timeout = 20000;
+                }
+                SqlCommand cmd = null;
+                string connectionString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
+                string queryString = @"SELECT Email FROM User WHERE Email = Email";
+
+                using (SqlConnection connection =
+                           new SqlConnection(connectionString))
+                {
+                    SqlCommand command =
+                        new SqlCommand(queryString, connection);
+                    connection.Open();
+                    cmd = new SqlCommand(queryString);
+                    cmd.Connection = connection;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    
+                    while (reader.Read())
+                    {
+
+                        var to = new MailAddress(reader["Email"].ToString());
+                        message.To.Add(to);
+
+                    }
+
+
+                    smtp.Send(message);
+                    reader.Close();
+                }
+            }
+        }
+
     }
 
 }

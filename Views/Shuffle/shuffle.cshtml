@@ -12,7 +12,7 @@
 
     <tr>
         <th>
-           Name1
+            Name1
         <th>
             Message
         </th>
@@ -34,11 +34,14 @@
             <td>
                 @Html.DisplayFor(modelUser => item.Name2)
             </td>
-            
+
         </tr>
     }
 </table>
 
 <div>
     @Html.ActionLink("Go back to Index Page", "Index")
+</div>
+<div>
+    <Button ID="sendEmail" runat="server" Text="Send Email" OnClick="sendEmail_Click" />
 </div>
