@@ -160,12 +160,18 @@ namespace shuffle2.Controllers
         {
             String[] users = _db.users.ToList().Select(e=>e.Name).ToArray();
             Random random = new Random(); 
-            int name1 = random.Next(users.Length);
-            int name2 = random.Next(users.Length);
+            int id1 = random.Next(users.Length);
+            int id2 = random.Next(users.Length);
+         
+            if (id1 != id2)
+            {
+                String[] Rusers = { users[id1], users[id2] };
 
-            
-            return View();
-            
+                return View(Rusers);
+            }
+            else
+                return RedirectToAction("Index");
+
         }
 
         private void start(object sender, EventArgs e)

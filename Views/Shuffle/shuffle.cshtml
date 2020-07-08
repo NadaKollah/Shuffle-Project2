@@ -1,4 +1,4 @@
-﻿@model shuffle2.Models.UserModel
+﻿@model List<shuffle2.Models.UserModel>
 
 @{
     ViewData["Title"] = "shuffle";
@@ -12,24 +12,14 @@
     <button type="submit" class="btn btn-primary">Start</button>
     <div>
 
-        <asp:Button ID="start" runat="server" ToolTip="Click to show user" Text="ShuffleId-Results"
-                    OnClick="start" />
+        <asp:Button ID="start" ToolTip="Click to show users" Text="ShuffleId-Results"
+                    OnClick="start" runat="server" />
 
-        <button onclick="start()">Start</button>
+        <asp:TexBox ID="shuffle" disabled="disabled" runat="server" />
 
-        <table border="0" cellpadding="5" cellspacing="1">
-            <tr>
-                <td>@Html.TextBoxFor(z => z.Name)</td>
-            </tr>
-            <tr>
-                <td><strong>gives a gift to</strong></td>
-            </tr>
-            <tr>
-                <td>@Html.TextBoxFor(z => z.Name)</td>
-            </tr>
-        </table>
+        <strong>gives a gift to</strong>
 
-
+        <asp:TexBox ID="shuffle" disabled="disabled" runat="server" />
 
     </div>
 
