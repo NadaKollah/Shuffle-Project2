@@ -155,31 +155,40 @@ namespace shuffle2.Controllers
         }
 
 
-        [HttpGet("/Shuffle/Anything")]
+        [HttpGet("/Shuffle/shuffle")]
         public ActionResult Shuffle()
+        {
+
+            var userList = _db.users.ToList();
+            var userListViewModel = new List<UserModel>();
+
+            foreach (var item in userList)
+            {
+                var user = new UserModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Surname = item.Surname,
+                    Email = item.Email
+                };
+                userListViewModel.Add(user);
+            }
+
+            return View(userListViewModel);
+        }
+
+     /*   [HttpGet("/Shuffle/shuffle")]
+        public ActionResult Shuffle2()
         {
             String[] users = _db.users.ToList().Select(e=>e.Name).ToArray();
             Random random = new Random(); 
             int id1 = random.Next(users.Length);
-            int id2 = random.Next(users.Length);
          
-            if (id1 != id2)
-            {
-                String[] Rusers = { users[id1], users[id2] };
+            var user2 = users[id1];
 
-                return View(Rusers);
-            }
-            else
-                return RedirectToAction("Index");
+            return View(user2);
 
-        }
-
-        private void start(object sender, EventArgs e)
-
-        {
-            Shuffle();
-            
-        }
+        }*/
     }
 
 }

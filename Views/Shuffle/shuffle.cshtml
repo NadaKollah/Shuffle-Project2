@@ -1,27 +1,44 @@
-﻿@model List<shuffle2.Models.UserModel>
+﻿@model IEnumerable<shuffle2.Models.UserModel>
 
 @{
     ViewData["Title"] = "shuffle";
 }
 
-<h1 style="text-align:center;" >Shuffle Page</h1>
+<h1 style="text-align:center;">Shuffle Page</h1>
 
 
-<form id="form1" runat="server">
+<table class="table">
 
-    <button type="submit" class="btn btn-primary">Start</button>
-    <div>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+           Message
+        </th>
+        <th>
+            Name2
+        </th>
+        <th></th>
+    </tr>
 
-        <asp:Button ID="start" ToolTip="Click to show users" Text="ShuffleId-Results"
-                    OnClick="start" runat="server" />
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelUser => user.Name)
+            </td>
+            <td>
+                gives a gift to
+            </td>
+            <td>
+                <asp:TextBox ID="shuffle" disabled="disabled" runat="server" />
+            </td>
+            
+        </tr>
+    }
+</table>
 
-        <asp:TexBox ID="shuffle" disabled="disabled" runat="server" />
-
-        <strong>gives a gift to</strong>
-
-        <asp:TexBox ID="shuffle" disabled="disabled" runat="server" />
-
-    </div>
-
-</form>
-
+<div>
+    @Html.ActionLink("Go back to Index Page", "Index")
+</div>
