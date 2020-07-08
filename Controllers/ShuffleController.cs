@@ -160,9 +160,7 @@ namespace shuffle2.Controllers
         {
 
             var userList = _db.users.ToList();
-            var userList2 = _db.users.ToList().ToArray();
             var userListViewModel = new List<UserModel>();
-            var userList2ViewModel = new List<UserModel>();
 
             foreach (var item in userList)
             {
@@ -176,25 +174,29 @@ namespace shuffle2.Controllers
                 userListViewModel.Add(user);
             }
 
-            foreach (var item in userList2)
+            var shuffleModel = new ShuffelModel();
+            var list = new List<NamesModel>();
+            foreach (var item in userListViewModel)
             {
-                var user2 = new UserModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Surname = item.Surname,
-                    Email = item.Email
-                };
-
-                userList2ViewModel.Add(user2);
                 Random random = new Random();
-                int id1 = random.Next(userList2.Length);
-                var name = userList2[id1];
-            }
-                var shuffleModel = new ShuffelModel();
-                shuffleModel.List1 = userListViewModel;
-                shuffleModel.List2 = userList2ViewModel;
+                int id1 = random.Next(userList.Count);
+                var user = userList[id1];
+                var skip = userList.SkipWhile(x=>x.Id==item.Id).Where(x=>x.Id==user.Id);
+                userList.Remove(user);
 
+
+                var names = new NamesModel()
+                {
+                   Name1=item.Name,
+                   Name2=user.Name
+                   
+                };
+               
+                list.Add(names);
+ 
+            }
+            
+            shuffleModel.names = list;
             return View(shuffleModel);
   
         }

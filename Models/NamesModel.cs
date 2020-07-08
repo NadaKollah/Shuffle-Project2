@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace shuffle2.Models
 {
-    public class ShuffelModel
+    public class NamesModel
     {
-       public List<NamesModel> names { get; set; }
+        public string Name1 { get; set; }
+        public string Name2 { get; set; }
     }
+
+  
 }
