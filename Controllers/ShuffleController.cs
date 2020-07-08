@@ -167,7 +167,7 @@ namespace shuffle2.Controllers
                 Name = x.Name,
                 Surname = x.Surname,
                 Email = x.Email
-            });
+            }).ToList();
 
             var shuffleModel = new ShuffelModel();
             var list = new List<NamesModel>();
