@@ -158,20 +158,19 @@ namespace shuffle2.Controllers
         [HttpGet("/Shuffle/Anything")]
         public ActionResult Shuffle()
         {
-            /*var user2 = @"SELECT Name
-                            FROM User
-                            ORDER BY NEWID()";
+            String[] users = _db.users.ToList().Select(e=>e.Name).ToArray();
+            Random random = new Random(); 
+            int num = random.Next(users.Length);
 
-            return View(user2);*/
-         
-                return View("Shuffle");
+            return View(num);
             
         }
 
-        protected void start(object sender, EventArgs e)
+        private void start(object sender, EventArgs e)
 
         {
             Shuffle();
+            this.start.Click += new EventHandler(start.Click);
         }
     }
 
