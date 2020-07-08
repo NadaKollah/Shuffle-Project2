@@ -160,9 +160,11 @@ namespace shuffle2.Controllers
         {
             String[] users = _db.users.ToList().Select(e=>e.Name).ToArray();
             Random random = new Random(); 
-            int num = random.Next(users.Length);
+            int name1 = random.Next(users.Length);
+            int name2 = random.Next(users.Length);
 
-            return View(num);
+            
+            return View();
             
         }
 
@@ -170,7 +172,7 @@ namespace shuffle2.Controllers
 
         {
             Shuffle();
-            this.start.Click += new EventHandler(start.Click);
+            
         }
     }
 
