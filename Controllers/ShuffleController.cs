@@ -196,7 +196,7 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
-        protected void sendEmail_Click(object sender, EventArgs e)
+        protected void sendEmail(object sender, EventArgs e)
         {
             {
 
