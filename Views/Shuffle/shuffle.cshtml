@@ -44,5 +44,5 @@
 </div>
 
 <div style="text-align:right;">
-    <input type="button" class="btn btn-info" value="SendEmail" onclick="location.href='@Url.Action("sendEmail", "shuffle")'" />
+    <input type="button" runat="server" id="sendEmail" class="btn btn-info" value="SendEmail" OnClick="sendEmail_Click"/>
 </div>

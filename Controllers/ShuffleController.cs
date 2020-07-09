@@ -179,7 +179,9 @@ namespace shuffle2.Controllers
                 Random random = new Random();
                 int id1 = random.Next(userList.Count);
                 var user = userList[id1];
-                var skip = userList.SkipWhile(x => x.Id == item.Id).Where(x => x.Id == user.Id);
+                if (item.Name == user.Name) {
+                    continue;
+                }
                 userList.Remove(user);
 
                 var names = new NamesModel()
@@ -196,50 +198,23 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
-        [HttpGet("/Shuffle/sendEmail")]
-        public ActionResult sendEmail()
+        protected void sendEmail(object sender, EventArgs e)
         {
-            /*{ 
-                MailMessage message = new MailMessage();
-                message.Subject = "Email Subject ";
-                message.Body = "Email Message";
-                message.From = new MailAddress("MyEmail@mail.com");
+            var emailList = _db.users.Select(x=>x.Email);
+            foreach (string email in emailList) 
+            {
+                SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.mail.com", 587);
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = new NetworkCredential("Email@mail.com", "xxxx");
+                smtp.EnableSsl = true;
 
-                var fromAddress = "MyEmail@mail.com";
-                const string fromPassword = "password";
+                MailMessage message = new MailMessage("Email@mail.com", email);
+                message.Subject = "Name of user to be gifted";
+                message.Body = "Test2";
 
-                var smtp = new System.Net.Mail.SmtpClient();
-                {
-                    smtp.Host = "smtp.mail.com";
-                    smtp.EnableSsl = true;
-                    smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-                    smtp.Credentials = new NetworkCredential(fromAddress, fromPassword);
-                    smtp.Timeout = 20000;
-                }
-                SqlCommand cmd = null;
-                string connectionString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
-                string queryString = @"SELECT Email FROM User ";
-
-                using (SqlConnection connection =
-                           new SqlConnection(connectionString))
-                {
-                    SqlCommand command =
-                        new SqlCommand(queryString, connection);
-                    connection.Open();
-                    cmd = new SqlCommand(queryString);
-                    cmd.Connection = connection;
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                  
-                    while (reader.Read())
-                    {
-                        var to = new MailAddress(reader["Email"].ToString());
-                        message.To.Add(to);
-                    }
-
-                    smtp.Send(message);
-                    reader.Close();*/
-                    return View("sendEmail");
+                smtp.Send(message);
+            }
+    
                 }
             }
         }
