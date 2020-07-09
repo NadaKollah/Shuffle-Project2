@@ -180,7 +180,7 @@ namespace shuffle2.Controllers
                 int id1 = random.Next(userList.Count);
                 var user = userList[id1];
                 if (item.Name == user.Name) {
-                    continue;
+                    var nuser = _db.users.Skip(id1);
                 }
                 userList.Remove(user);
 
@@ -198,21 +198,38 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
-        protected void sendEmail(object sender, EventArgs e)
+        protected void sendEmail(string MailFrom, string MailTo, string MailSubject, string MailBody)
         {
             var emailList = _db.users.Select(x=>x.Email);
             foreach (string email in emailList) 
             {
-                SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.mail.com", 587);
-                smtp.UseDefaultCredentials = true;
-                smtp.Credentials = new NetworkCredential("Email@mail.com", "xxxx");
+                MailMessage message = new MailMessage();
+                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+
+                message.Subject = "Name of user to be gifted";
+                message.Body = "Add Email Body Part";
+                message.From = new MailAddress("Valid Email Address");
+                message.To.Add("Valid Email Address");
+                message.IsBodyHtml = true;
+                client.Host = "smtp.gmail.com";
+                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("Valid Email Address", "Password");
+                client.Port = int.Parse("587");
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicauthenticationinfo;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Send(message);
+
+                /*System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("Email@gmail.com", "xxxx");
                 smtp.EnableSsl = true;
 
-                MailMessage message = new MailMessage("Email@mail.com", email);
+                MailMessage message = new MailMessage("Email@gmail.com", email);
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Test2";
 
-                smtp.Send(message);
+                smtp.Send(message);*/
             }
     
                 }
