@@ -174,19 +174,18 @@ namespace shuffle2.Controllers
 
             var shuffleModel = new ShuffelModel();
             var list = new List<NamesModel>();
+
+       
             foreach (var item in userListViewModel)
             {
+                
                 Random random = new Random();
+              Shuffle:
                 int id1 = random.Next(userList.Count);
                 var user = userList[id1];
                 if (item.Name == user.Name) 
                 {
-                    var nList = _db.users.Select(x=>x.Id!=id1).ToList();
-                    int nid = random.Next(nList.Count);
-                    var nuser = nList[nid];
-
-                    nList.RemoveAt(nid);
-
+                    goto Shuffle;
                 }
                 userList.Remove(user);
 
@@ -204,7 +203,7 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
-        protected void sendEmail(string MailFrom, string MailTo, string MailSubject, string MailBody)
+        protected void sendEmail(object sender, EventArgs e)
         {
             var emailList = _db.users.Select(x=>x.Email);
             foreach (string email in emailList) 
