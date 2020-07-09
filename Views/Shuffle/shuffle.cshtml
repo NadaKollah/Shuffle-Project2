@@ -42,6 +42,7 @@
 <div>
     @Html.ActionLink("Go back to Index Page", "Index")
 </div>
-<div>
-    <Button ID="sendEmail" runat="server" Text="Send Email" OnClick="sendEmail" />
+
+<div style="text-align:right;">
+    <input type="button" class="btn btn-info" value="SendEmail" onclick="location.href='@Url.Action("sendEmail", "shuffle")'" />
 </div>

@@ -196,10 +196,10 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
-        protected void sendEmail(object sender, EventArgs e)
+        [HttpGet("/Shuffle/sendEmail")]
+        public ActionResult sendEmail()
         {
-            {
-
+            /*{ 
                 MailMessage message = new MailMessage();
                 message.Subject = "Email Subject ";
                 message.Body = "Email Message";
@@ -218,7 +218,7 @@ namespace shuffle2.Controllers
                 }
                 SqlCommand cmd = null;
                 string connectionString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
-                string queryString = @"SELECT Email FROM User WHERE Email = Email";
+                string queryString = @"SELECT Email FROM User ";
 
                 using (SqlConnection connection =
                            new SqlConnection(connectionString))
@@ -230,23 +230,18 @@ namespace shuffle2.Controllers
                     cmd.Connection = connection;
 
                     SqlDataReader reader = cmd.ExecuteReader();
-
-                    
+                  
                     while (reader.Read())
                     {
-
                         var to = new MailAddress(reader["Email"].ToString());
                         message.To.Add(to);
-
                     }
 
-
                     smtp.Send(message);
-                    reader.Close();
+                    reader.Close();*/
+                    return View("sendEmail");
                 }
             }
         }
 
-    }
 
-}
