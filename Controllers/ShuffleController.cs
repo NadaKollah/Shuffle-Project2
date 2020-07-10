@@ -207,7 +207,7 @@ namespace shuffle2.Controllers
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
 
                 message.Subject = "Name of user to be gifted";
-                message.Body = "Email Body";
+                message.Body = "Email Body Text";
                 message.From = new MailAddress("worke0882@gmail.com");
                 message.To.Add(email);
                 message.IsBodyHtml = true;
