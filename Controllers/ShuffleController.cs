@@ -1,19 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using shuffle2.Entity;
 using System;
 using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
 using shuffle2.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using shuffle2.Models;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using System.Net.Mail;
-using System.Configuration;
-using System.Net;
 
 namespace shuffle2.Controllers
 {
@@ -224,7 +219,6 @@ namespace shuffle2.Controllers
                 smtp.Credentials = basicauthenticationinfo;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Send(message);
-
             }
     
                 }

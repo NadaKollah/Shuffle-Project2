@@ -43,6 +43,12 @@
     @Html.ActionLink("Go back to Index Page", "Index")
 </div>
 
+<script type="text/javascript">
+    function showMessage() {
+        alert("Email Sent Successfully");
+        sendEmail();
+    }
+</script>
 <div style="text-align:right;">
-    <input type="button" runat="server" id="sendEmail" class="btn btn-info" value="SendEmail" OnClick="sendEmail" />  
+    <input type="button" runat="server" id="sendEmail" class="btn btn-info" value="SendEmail" OnClick="showMessage()" />  
 </div>
