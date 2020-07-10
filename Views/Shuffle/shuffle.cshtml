@@ -8,48 +8,44 @@
 <h1 style="text-align:center;">Shuffle Page</h1>
 
 
-<table class="table">
+    <table class="table">
 
-    <tr>
-        <th>
-            Name1
-        <th>
-            Message
-        </th>
-        <th>
-            Name2
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.names)
-    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelUser => item.Name1)
-            </td>
-            <td>
-                gives a gift to
-            </td>
-            <td>
-                @Html.DisplayFor(modelUser => item.Name2)
-            </td>
-
+            <th>
+                Name1
+            <th>
+                Message
+            </th>
+            <th>
+                Name2
+            </th>
+            <th></th>
         </tr>
-    }
-</table>
 
-<div>
-    @Html.ActionLink("Go back to Index Page", "Index")
-</div>
+        @foreach (var item in Model.names)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelUser => item.Name1)
+                </td>
+                <td>
+                    gives a gift to
+                </td>
+                <td>
+                    @Html.DisplayFor(modelUser => item.Name2)
+                </td>
 
-<script type="text/javascript">
-    function showAlertMessage()
-    {
-         alert("Email Sent Successfully");    
-    }
-</script>
+            </tr>
+        }
+    </table>
 
-<div style="text-align:right;">
-    <input type="button" runat="server" id="sendEmail" class="btn btn-info" value="SendEmail" OnClick="showAlertMessage()" />  
-</div>
+    <div>
+        @Html.ActionLink("Go back to Index Page", "Index")
+    </div>
+
+    <div style="text-align:right;">
+        <form asp-controller="Shuffle" asp-action="Shuffle" method="post" asp-route-shuffelModel=@Model>
+            <button type="submit" class="btn btn-info">SendEmail</button>
+        </form>
+    </div>
+

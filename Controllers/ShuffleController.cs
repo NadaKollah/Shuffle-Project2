@@ -198,6 +198,13 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
+        [HttpPost("/Shuffle/shuffle")]
+        public ActionResult Shuffle(ShuffelModel shuffelModel) {
+
+
+            return View(shuffelModel);
+        }
+
         public void sendEmail(object sender, EventArgs e)
         {
             var emailList = _db.users.Select(x=>x.Email);
@@ -223,10 +230,10 @@ namespace shuffle2.Controllers
                 {
                     Console.WriteLine(ex.ToString());
                 }
+                
             }
-    
+
                 }
             }
         }
-
 

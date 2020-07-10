@@ -8,5 +8,6 @@ namespace shuffle2.Models
     public class ShuffelModel
     {
        public List<NamesModel> names { get; set; }
+        public string response { get; set; }
     }
 }
