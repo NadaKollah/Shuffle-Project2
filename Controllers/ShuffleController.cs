@@ -208,17 +208,25 @@ namespace shuffle2.Controllers
 
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Email Body";
-                message.From = new MailAddress("");
-                message.To.Add("");
+                message.From = new MailAddress("worke0882@gmail.com");
+                message.To.Add(email);
                 message.IsBodyHtml = true;
                 smtp.Host = "smtp.gmail.com";
-                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("", "");
+                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
                 smtp.Port = int.Parse("587");
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = basicauthenticationinfo;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Send(message);
+                
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
     
                 }
