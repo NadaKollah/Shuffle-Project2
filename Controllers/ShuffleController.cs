@@ -203,17 +203,13 @@ namespace shuffle2.Controllers
             var emailList = _db.users.Select(x=>x.Email);
             foreach (string email in emailList) 
             {
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
+                MailMessage message = new MailMessage("worke0882@gmail.com",email);
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com",587);
 
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Email Body Text";
-                message.From = new MailAddress("worke0882@gmail.com");
-                message.To.Add(email);
                 message.IsBodyHtml = true;
-                smtp.Host = "smtp.gmail.com";
                 System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
-                smtp.Port = int.Parse("587");
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = basicauthenticationinfo;/*smtp.Credentials = Credentials;(another way to do it)*/
