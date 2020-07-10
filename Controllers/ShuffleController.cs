@@ -217,7 +217,7 @@ namespace shuffle2.Controllers
                 try
                 {
                     smtp.Send(message);
-                  
+                    ViewBag.message = "The email has been sent successfully ";
                 }
                 catch (Exception ex)
                 {
