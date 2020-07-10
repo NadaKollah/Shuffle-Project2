@@ -204,7 +204,7 @@ namespace shuffle2.Controllers
             foreach (string email in emailList) 
             {
                 MailMessage message = new MailMessage();
-                System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
+                SmtpClient smtp = new SmtpClient();
 
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Email Body Text";
@@ -216,14 +216,15 @@ namespace shuffle2.Controllers
                 smtp.Port = int.Parse("587");
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = basicauthenticationinfo;
+                smtp.Credentials = basicauthenticationinfo;/*smtp.Credentials = Credentials;(another way to do it)*/
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 
                 try
                 {
                     smtp.Send(message);
+                  
                 }
-                catch (SmtpException ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
                 }
