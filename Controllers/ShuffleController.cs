@@ -154,7 +154,7 @@ namespace shuffle2.Controllers
 
 
         [HttpGet("/Shuffle/shuffle")]
-        public ActionResult Shuffle(string result)
+        public ActionResult Shuffle()
         {
 
             var userList = _db.users.ToList();
@@ -195,45 +195,46 @@ namespace shuffle2.Controllers
             }
 
             shuffleModel.names = list;
-            shuffleModel.response =result;
             return View(shuffleModel);
         }
 
         [HttpPost("/Shuffle/shuffle")]
         public ActionResult Shuffle(ShuffleModel shuffleModel) {
-           var result= sendEmail();
+             var result= sendEmail();
 
-            return RedirectToAction("Shuffle","Shuffle",result);
+            return RedirectToAction("Shuffle","Shuffle");
         }
 
         public string sendEmail()
         {
             string response="";
             var emailList = _db.users.Select(x=>x.Email);
-          
-                MailMessage message = new MailMessage("worke0882@gmail.com","nada.kollah@gmail.com");
+            foreach (string email in emailList) 
+            {
+                MailMessage message = new MailMessage("worke0882@gmail.com",email);
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com",587);
 
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Email Body Text";
+                message.IsBodyHtml = true;
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Credentials = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
 
-            try
-            {
-                   smtp.Send(message);
+                try
+                {
+                    smtp.Send(message);
                    response= "The email has been sent successfully ";
                 }
                 catch (Exception ex)
                 {
                     response = "Email not sent";
                 }
-
-           
+                
+            }
             return response;
-        }
+                }
             }
         }
 
