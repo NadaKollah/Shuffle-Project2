@@ -1,4 +1,4 @@
-﻿@model shuffle2.Models.ShuffelModel
+﻿@model shuffle2.Models.ShuffleModel
 
 
 @{
@@ -44,8 +44,14 @@
     </div>
 
     <div style="text-align:right;">
-        <form asp-controller="Shuffle" asp-action="Shuffle" method="post" asp-route-shuffelModel=@Model>
+        <form asp-controller="Shuffle" asp-action="Shuffle" method="post" asp-route-shuffleModel=@Model>
             <button type="submit" class="btn btn-info">SendEmail</button>
         </form>
     </div>
-
+<script type="text/javascript">
+    if (@Model.response!= null)
+    {
+        alert(@Model.response);
+    }
+   
+</script>

@@ -154,7 +154,7 @@ namespace shuffle2.Controllers
 
 
         [HttpGet("/Shuffle/shuffle")]
-        public ActionResult Shuffle()
+        public ActionResult Shuffle(string result)
         {
 
             var userList = _db.users.ToList();
@@ -167,7 +167,7 @@ namespace shuffle2.Controllers
                 Email = x.Email
             }).ToList();
 
-            var shuffleModel = new ShuffelModel();
+            var shuffleModel = new ShuffleModel();
             var list = new List<NamesModel>();
 
        
@@ -195,45 +195,45 @@ namespace shuffle2.Controllers
             }
 
             shuffleModel.names = list;
+            shuffleModel.response =result;
             return View(shuffleModel);
         }
 
         [HttpPost("/Shuffle/shuffle")]
-        public ActionResult Shuffle(ShuffelModel shuffelModel) {
+        public ActionResult Shuffle(ShuffleModel shuffleModel) {
+           var result= sendEmail();
 
-
-            return View(shuffelModel);
+            return RedirectToAction("Shuffle","Shuffle",result);
         }
 
-        public void sendEmail(object sender, EventArgs e)
+        public string sendEmail()
         {
+            string response="";
             var emailList = _db.users.Select(x=>x.Email);
-            foreach (string email in emailList) 
-            {
-                MailMessage message = new MailMessage("worke0882@gmail.com",email);
+          
+                MailMessage message = new MailMessage("worke0882@gmail.com","nada.kollah@gmail.com");
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com",587);
 
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Email Body Text";
-                message.IsBodyHtml = true;
-                smtp.Credentials = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                
-                try
-                {
-                    smtp.Send(message);
-                    ViewBag.message = "The email has been sent successfully ";
+                smtp.Credentials = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
+
+            try
+            {
+                   smtp.Send(message);
+                   response= "The email has been sent successfully ";
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    response = "Email not sent";
                 }
-                
-            }
 
-                }
+           
+            return response;
+        }
             }
         }
 
