@@ -209,10 +209,9 @@ namespace shuffle2.Controllers
                 message.Subject = "Name of user to be gifted";
                 message.Body = "Email Body Text";
                 message.IsBodyHtml = true;
-                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
+                smtp.Credentials = new System.Net.NetworkCredential("worke0882@gmail.com", "Work1357.");
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = basicauthenticationinfo;/*smtp.Credentials = Credentials;(another way to do it)*/
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 
                 try
