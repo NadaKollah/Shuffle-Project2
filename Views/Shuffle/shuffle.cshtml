@@ -45,10 +45,11 @@
 
 <script type="text/javascript">
     function showMessage() {
-        alert("Email Sent Successfully");
-        sendEmail();
+         @Html.ActionLink("sendEmail", "sendEmail","ShuffleController")
+         alert("Email Sent Successfully");    
     }
 </script>
+
 <div style="text-align:right;">
     <input type="button" runat="server" id="sendEmail" class="btn btn-info" value="SendEmail" OnClick="showMessage()" />  
 </div>

@@ -198,7 +198,7 @@ namespace shuffle2.Controllers
             return View(shuffleModel);
         }
 
-        protected void sendEmail(object sender, EventArgs e)
+        public void sendEmail(object sender, EventArgs e)
         {
             var emailList = _db.users.Select(x=>x.Email);
             foreach (string email in emailList) 
