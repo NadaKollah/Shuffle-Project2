@@ -4,6 +4,13 @@
 @{
     ViewData["Title"] = "shuffle";
 }
+    <head>
+        <script language="Javascript">
+<!--
+            alert("Emails have been sent successfully")
+            //-->
+        </script>
+    </head>
 
 <h1 style="text-align:center;">Shuffle Page</h1>
 
@@ -42,11 +49,4 @@
     <div>
         @Html.ActionLink("Go back to Index Page", "Index")
     </div>
-   
-<script type="text/javascript">
-    if (@Model.response!= null)
-    {
-        alert(@Model.response);
-    }
-   
-</script>
+  

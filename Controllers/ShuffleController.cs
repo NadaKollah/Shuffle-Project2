@@ -191,7 +191,7 @@ namespace shuffle2.Controllers
                 };
 
                 list.Add(names);
-                //sendEmail(item.Email,user.Name);
+                sendEmail(item.Email,user.Name);
             }
 
             shuffleModel.names = list;
