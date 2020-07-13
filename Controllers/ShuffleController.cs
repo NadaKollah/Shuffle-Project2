@@ -192,30 +192,21 @@ namespace shuffle2.Controllers
                 };
 
                 list.Add(names);
+                sendEmail(item.Email,user.Name);
             }
 
             shuffleModel.names = list;
             return View(shuffleModel);
         }
-
-        [HttpPost("/Shuffle/shuffle")]
-        public ActionResult Shuffle(ShuffleModel shuffleModel) {
-             var result= sendEmail();
-
-            return RedirectToAction("Shuffle","Shuffle");
-        }
-
-        public string sendEmail()
+        public string sendEmail(string email,string name)
         {
             string response="";
             var emailList = _db.users.Select(x=>x.Email);
-            foreach (string email in emailList) 
-            {
                 MailMessage message = new MailMessage("worke0882@gmail.com",email);
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com",587);
 
                 message.Subject = "Name of user to be gifted";
-                message.Body = "Email Body Text";
+                message.Body = name;
                 message.IsBodyHtml = true;
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
@@ -232,7 +223,7 @@ namespace shuffle2.Controllers
                     response = "Email not sent";
                 }
                 
-            }
+ 
             return response;
                 }
             }

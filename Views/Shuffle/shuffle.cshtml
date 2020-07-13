@@ -43,11 +43,7 @@
         @Html.ActionLink("Go back to Index Page", "Index")
     </div>
 
-    <div style="text-align:right;">
-        <form asp-controller="Shuffle" asp-action="Shuffle" method="post" asp-route-shuffleModel=@Model>
-            <button type="submit" class="btn btn-info">SendEmail</button>
-        </form>
-    </div>
+   
 <script type="text/javascript">
     if (@Model.response!= null)
     {
