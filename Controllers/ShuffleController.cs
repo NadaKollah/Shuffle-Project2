@@ -200,11 +200,9 @@ namespace shuffle2.Controllers
         }
         public string sendEmail(string email,string name)
         {
-            string response="";
-            var emailList = _db.users.Select(x=>x.Email);
+                string response="";
                 MailMessage message = new MailMessage("worke0882@gmail.com",email);
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com",587);
-
                 message.Subject = "Name of user to be gifted";
                 message.Body = name;
                 message.IsBodyHtml = true;
@@ -222,8 +220,7 @@ namespace shuffle2.Controllers
                 {
                     response = "Email not sent";
                 }
-                
- 
+
             return response;
                 }
             }
