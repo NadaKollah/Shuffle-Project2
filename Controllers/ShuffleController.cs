@@ -174,13 +174,12 @@ namespace shuffle2.Controllers
             foreach (var item in userListViewModel)
             {
                 
-                Random random = new Random();
-              Shuffle:
+                Random random = new Random();           
                 int id1 = random.Next(userList.Count);
                 var user = userList[id1];
                 if (item.Name == user.Name) 
                 {
-                    goto Shuffle;
+                   shuffle2(userList);
                 }
                 userList.Remove(user);
 
@@ -192,11 +191,19 @@ namespace shuffle2.Controllers
                 };
 
                 list.Add(names);
-                sendEmail(item.Email,user.Name);
+                //sendEmail(item.Email,user.Name);
             }
 
             shuffleModel.names = list;
             return View(shuffleModel);
+        }
+
+        public void shuffle2(List<User> userList) {
+
+            Random random = new Random();
+            int nid = random.Next(userList.Count);
+            var nuser = userList[nid];
+
         }
         public string sendEmail(string email,string name)
         {
