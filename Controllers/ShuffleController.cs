@@ -179,7 +179,7 @@ namespace shuffle2.Controllers
                 var user = userList[id1];
                 if (item.Name == user.Name) 
                 {
-                   shuffle2(userList);
+                  var nuser = shuffle2(userList);
                 }
                 userList.Remove(user);
 
@@ -203,7 +203,6 @@ namespace shuffle2.Controllers
             Random random = new Random();
             int nid = random.Next(userList.Count);
             var nuser = userList[nid];
-
         }
         public string sendEmail(string email,string name)
         {
