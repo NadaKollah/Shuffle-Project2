@@ -7,6 +7,7 @@ namespace shuffle2.Models
 {
     public class NamesModel
     {
+        public string Email { get; set; }
         public string Name1 { get; set; }
         public string Name2 { get; set; }
     }

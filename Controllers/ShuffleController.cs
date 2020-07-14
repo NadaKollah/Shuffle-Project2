@@ -170,41 +170,46 @@ namespace shuffle2.Controllers
             var shuffleModel = new ShuffleModel();
             var list = new List<NamesModel>();
 
-       
-            foreach (var item in userListViewModel)
+
+            var didShuffleWork = false;
+            while (didShuffleWork == false)
             {
-                
-                Random random = new Random();           
-                int id1 = random.Next(userList.Count);
-                var user = userList[id1];
-                if (item.Name == user.Name) 
+                didShuffleWork = true;
+                foreach (var item in userListViewModel)
                 {
-                    Shuffle2(user.Name);
+                    var tempUserList = userList.Where(x => x.Name != item.Name).ToList();
+                    if (tempUserList.Any() == false)
+                    {
+                        didShuffleWork = false;
+                        break;
+                    }
+                    var user = GetRandomUser(tempUserList);
+                    userList.Remove(user);
+
+                    var names = new NamesModel()
+                    {
+                        Email = user.Email,
+                        Name1 = item.Name,
+                        Name2 = user.Name
+                    };
+
+                    list.Add(names);
                 }
-                userList.Remove(user);
-
-                var names = new NamesModel()
-                {
-                    Name1 = item.Name,
-                    Name2 = user.Name
-
-                };
-
-                list.Add(names);
-                sendEmail(item.Email,user.Name);
             }
+
+            foreach(var match in list)
+            //    sendEmail(match.Email,match.Name1);
 
             shuffleModel.names = list;
             return View(shuffleModel);
         }
 
-        public string Shuffle2(string u) {
-
-            var userList = _db.users.ToList();
+        public User GetRandomUser(List<User> userList) 
+        {
             Random random = new Random();
             int nid = random.Next(userList.Count);
-            var nuser = userList[nid];
-            return nuser.Name;
+            var randomuser = userList[nid];
+            return randomuser;
         }
         public string sendEmail(string email,string name)
         {
